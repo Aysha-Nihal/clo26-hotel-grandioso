@@ -2,8 +2,9 @@
 
 Här ligger databaskopplingen.
 
-- **EF Core:** en `DbContext`-klass och eventuella migrationer. Connectionstring läses från miljövariabel eller en lokal fil som ligger i `.gitignore`, aldrig i koden.
-- **MongoDB:** en klass som samlar anslutningen och en klass per collection.
-- **Serverdatabas:** starta med Docker eller använd en gratis onlineinstans. Beskriv hur i projektets README.
+- **EF Core:** en `DbContext`-klass och migrationer. Connectionstring läses från miljövariabel eller en lokal fil som ligger i `.gitignore`, aldrig i koden.
+- **Serverdatabas:** om ni använder en, beskriv hur den startas i projektets README. SQLite räcker för uppgiften.
 
-Ingen ADO.NET. Använd EF Core eller MongoDB.
+Ingen ADO.NET. Använd EF Core.
+
+Filerna `exempel_*.md` är exempel. Ta bort dem när ni lagt in era egna klasser.

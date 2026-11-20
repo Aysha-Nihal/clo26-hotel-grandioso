@@ -5,7 +5,7 @@ Här ligger själva programmet, Hotel Grandioso. Varje mapp har en egen README s
 | Mapp | Innehåll |
 |------|----------|
 | `Models/` | Klasser som representerar det ni hanterar (entiteter) |
-| `Data/` | Databaskoppling och kontext (EF Core eller MongoDB) |
+| `Data/` | Databaskoppling och kontext (EF Core) |
 | `Services/` | Logik som kopplar ihop modeller och data, till exempel Repository |
 | `UI/` | Gränssnittet: konsol, Blazor eller MVC |
 
