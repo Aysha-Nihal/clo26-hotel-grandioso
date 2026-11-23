@@ -1,44 +1,18 @@
-# Hotel Grandioso — Inlämning 1
+# HotelGrandioso — kodmappen
 
-**Namn:** [ditt namn]
+Här ligger själva programmet, Hotel Grandioso. Varje mapp har en egen README som beskriver vad som ska ligga där.
 
-## Så kör du projektet
+| Mapp | Innehåll |
+|------|----------|
+| `Models/` | Klasser som representerar det ni hanterar (entiteter) |
+| `Data/` | Databaskoppling och kontext (EF Core) |
+| `Services/` | Logik som kopplar ihop modeller och data, till exempel Repository |
+| `UI/` | Gränssnittet: konsol, Blazor eller MVC |
 
-1. Forka repot på GitHub och klona din fork
-2. Öppna `HotelGrandioso.slnx` i Visual Studio (eller öppna mappen i VS Code)
-3. Tryck **F5** för att starta
+`Program.cs` är startpunkten. Den ska vara kort och bara koppla ihop delarna.
 
-Via terminalen:
+## Tips
 
-```bash
-dotnet run --project HotelGrandioso
-```
-
-## Databas
-
-- Databas: [SQLite eller LocalDB]
-- Migrationer: [hur du skapar och kör dem]
-
-## UML-klassdiagram
-
-```mermaid
-classDiagram
-    %% Ersätt med ditt eget klassdiagram
-```
-
-## GDPR
-
-Utvärdera fälten i `Guest` ett i taget. Vad bygger du in, och varför?
-
->
-
-## Designmönster
-
-Beskriv det designmönster du använt (till exempel Repository), vad det gör och varför du valde det.
-
->
-
-## Tekniker
-
-- C# / .NET 10
-- Entity Framework Core
+- Lägg varje klass i sin egen fil, med samma namn som klassen.
+- Håll namn på svenska i utskrifter och UI, och på engelska i kod (klasser, metoder, variabler).
+- Kommentarer på svenska, och förklara varför snarare än vad.
