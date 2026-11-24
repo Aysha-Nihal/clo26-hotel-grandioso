@@ -13,7 +13,7 @@ public class Room
     // A room can be booked multiple times on different dates.
     public List<Booking> Bookings { get; set; } = new();
     // Prevent invalid room prices when changing the price.
-    public void ChangePrice(decimal newPrice)
+    public void ChangePrice(decimal newPrice)    // Method
     {
         if (newPrice <= 0)
         {

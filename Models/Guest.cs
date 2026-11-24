@@ -9,4 +9,5 @@ public class Guest
 
     // A guest can book multiple spa treatments.
     public List<SpaBooking> SpaBookings { get; set; } = new();
+
 }
