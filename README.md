@@ -1,18 +1,18 @@
 # HotelGrandioso — kodmappen
 
-Här ligger själva programmet, Hotel Grandioso. Varje mapp har en egen README som beskriver vad som ska ligga där.
+The program itself is located here, Hotel Grandioso. Each folder has its own README which describes what should be placed there.
 
 | Mapp | Innehåll |
 |------|----------|
-| `Models/` | Klasser som representerar det ni hanterar (entiteter) |
-| `Data/` | Databaskoppling och kontext (EF Core) |
-| `Services/` | Logik som kopplar ihop modeller och data, till exempel Repository |
-| `UI/` | Gränssnittet: konsol, Blazor eller MVC |
+| `Models/` | Classes that represent what you are handling (entities) |
+| `Data/` | Database connection and context (EF Core) |
+| `Services/` | Logic that connects models and data, for example, Repository |
+| `UI/` | The interface: console, Blazor, or MVC |
 
-`Program.cs` är startpunkten. Den ska vara kort och bara koppla ihop delarna.
+`Program.cs` is the starting point. It should be brief and simply connect the parts.
 
 ## Tips
 
-- Lägg varje klass i sin egen fil, med samma namn som klassen.
-- Håll namn på svenska i utskrifter och UI, och på engelska i kod (klasser, metoder, variabler).
-- Kommentarer på svenska, och förklara varför snarare än vad.
+- Place each class in its own file, with the same name as the class.
+- Keep names in Swedish in printouts and the UI, and in English in the code (classes, methods, variables).
+- Comments in English, and explain the "why" rather than the "what."
