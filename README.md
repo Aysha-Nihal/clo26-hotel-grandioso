@@ -1,6 +1,6 @@
 # HotelGrandioso — kodmappen
 
-Här ligger själva programmet, Hotel Grandioso. Varje mapp har en egen README som beskriver vad som ska ligga där.
+The program itself is located here, Hotel Grandioso. Each folder has its own README which describes what should be placed there.
 
 | Mapp | Innehåll |
 |------|----------|
