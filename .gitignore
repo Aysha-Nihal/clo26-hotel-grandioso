@@ -11,3 +11,10 @@ obj/
 # OS
 .DS_Store
 Thumbs.db
+
+
+# SQLite database files should remain local.
+*.db
+*.db-shm
+*.db-wal
+

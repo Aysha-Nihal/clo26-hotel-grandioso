@@ -11,18 +11,22 @@ public class HotelDbContext : DbContext  // DbContext gives our class database-m
     public DbSet<Treatment> Treatments => Set<Treatment>();
     public DbSet<SpaBooking> SpaBookings => Set<SpaBooking>();
 
-    protected override void OnConfiguring(
-        DbContextOptionsBuilder optionsBuilder)
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        if (!optionsBuilder.IsConfigured)
+        if (!options.IsConfigured)
         {
-            // The connection is configurable without changing source code.
-            string connectionString =
-                Environment.GetEnvironmentVariable(
-                    "HOTEL_DB_CONNECTION")
-                ?? "Data Source=hotel.db";
+            // Read the connection string from the environment to keep configuration outside the source code.
+            string? connectionString =
+                Environment.GetEnvironmentVariable("HOTEL_DB");
 
-            optionsBuilder.UseSqlite(connectionString); // SQLite connection ie EF Core to use SQLite.
+            // Fail early to avoid starting the application without a valid database configuration.
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException(
+                    "Environment variable HOTEL_DB is missing.");
+            }
+
+            options.UseSqlite(connectionString);
         }
     }
 
@@ -30,9 +34,16 @@ public class HotelDbContext : DbContext  // DbContext gives our class database-m
     {
         base.OnModelCreating(modelBuilder);
 
-        // Room numbers must be unique across the hotel.
+        // Each room number must identify exactly one room in the hotel.
         modelBuilder.Entity<Room>()
             .HasIndex(r => r.RoomNumber)
             .IsUnique();
     }
 }
+
+
+// EF Core is an Object-Relational Mapper (ORM). It translates operations on C# objects into database operations.
+
+// SQLite is the database engine.It stores our information in a file named hotel.db.
+
+// Together, they allow the application to save and retrieve data even after the program closes.
