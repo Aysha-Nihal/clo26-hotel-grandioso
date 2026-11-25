@@ -77,8 +77,9 @@ This keeps database access separate from the user interface and other applicatio
  **EF Core:**
  
  It is a `DbContext`-class and migrations. The connection string is read from an environment variable or a local file included in `.gitignore`, never from the code.
+ 
 
-- **Serverdatabas:**
+ **Serverdatabas:**
   
   SQLite is sufficient for the task.
 
