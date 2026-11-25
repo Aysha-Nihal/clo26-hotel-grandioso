@@ -71,6 +71,9 @@ Booking validation, room availability, and price calculations will be handled se
 This keeps database access separate from the user interface and other application logic.
 
 
+
+
+
  **EF Core:**
  
  It is a `DbContext`-class and migrations. The connection string is read from an environment variable or a local file included in `.gitignore`, never from the code.
