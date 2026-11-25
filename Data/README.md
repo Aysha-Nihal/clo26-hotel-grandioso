@@ -71,6 +71,32 @@ Booking validation, room availability, and price calculations will be handled se
 This keeps database access separate from the user interface and other application logic.
 
 
+## Database Technology
+
+### EF Core
+
+The application uses Entity Framework Core (EF Core) Code First.
+
+`HotelDbContext.cs` inherits from `DbContext` and manages six entity collections using `DbSet`.
+
+Database migrations are included in the project under the `Migrations` folder.
+
+The connection string is read from the `HOTEL_DB` environment variable, not hardcoded in the source code.
+
+### Server Database
+
+SQLite is used as the database for Hotel Grandioso.
+
+SQLite does not require a separate database server. The data is stored locally in a `hotel.db` file.
+
+The database file is excluded from Git using `.gitignore`.
+
+### Database Access
+
+The application uses EF Core for database operations.
+
+No ADO.NET or manually written SQL queries are used in the application.
+
 
 
 
