@@ -27,3 +27,22 @@ Console.WriteLine($"Rooms: {db.Rooms.Count()}");
 Console.WriteLine($"Spa treatments: {db.Treatments.Count()}");
 
 Console.WriteLine("Database initialization completed!");
+
+// Create the repository using the existing database context.
+IHotelRepository repository = new HotelRepository(db);          // Repository initialization
+
+// Retrieve all rooms through the repository.
+Console.WriteLine("\nAvailable hotel rooms:");
+
+// Retrieving rooms using the repository
+List<Room> rooms = repository.GetAllRooms();                    
+
+// Display room details, including room type and nightly price.
+foreach (Room room in rooms)
+{
+    Console.WriteLine(
+        $"{room.RoomNumber} - {room.RoomType.Name} - " +
+        $"{room.SizeM2} m² - {room.PricePerNight} kr/night");
+}
+
+Console.WriteLine($"\nTotal rooms: {rooms.Count}");
