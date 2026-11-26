@@ -48,11 +48,11 @@ public class HotelRepository : IHotelRepository
         _context.SaveChanges();
     }
 
-    public void AddBooking(Booking booking)
-    {
-        _context.Bookings.Add(booking);
-        _context.SaveChanges();
-    }
+    //public void AddBooking(Booking booking)
+    //{
+    //    _context.Bookings.Add(booking);
+    //    _context.SaveChanges();
+    //}
 
     public void RemoveBooking(Booking booking)
     {
@@ -75,7 +75,7 @@ public class HotelRepository : IHotelRepository
 
     public bool TryCreateBooking(Booking booking)
     {
-        if (booking.CheckIn >= booking.CheckOut)
+        if (booking.CheckIn.Date >= booking.CheckOut.Date)
         {
             throw new ArgumentException(
                 "Check-out must be later than check-in.");

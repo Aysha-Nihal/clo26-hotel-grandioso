@@ -19,7 +19,7 @@ public interface IHotelRepository
     void AddGuest(Guest guest);
 
     // Store a new room booking.
-    void AddBooking(Booking booking);
+    //void AddBooking(Booking booking);
 
     // Cancel an existing room booking.
     void RemoveBooking(Booking booking);

@@ -52,18 +52,29 @@ public class BookingService
 
 
 
-    public bool CreateBooking(
+    public bool CreateBooking(              // CREATE BOOKING
         int roomNumber,
         int guestId,
         DateTime checkIn,
         DateTime checkOut)
     {
+        // Validate booking dates.
         if (!AreDatesValid(checkIn, checkOut))
         {
             throw new ArgumentException(
                 "Invalid booking dates.");
         }
 
+        // NEW: Verify that the guest exists.
+        Guest? guest = _repository.GetGuestById(guestId);
+
+        if (guest == null)
+        {
+            throw new ArgumentException(
+                "The requested guest does not exist.");
+        }
+
+        // Find the requested room.
         Room? room = _repository.GetRoomByNumber(roomNumber);
 
         if (room == null)
@@ -72,6 +83,7 @@ public class BookingService
                 "The requested room does not exist.");
         }
 
+        // Create a booking object with the validated details.
         Booking booking = new Booking
         {
             RoomId = room.Id,
@@ -80,11 +92,16 @@ public class BookingService
             CheckOut = checkOut.Date
         };
 
+        // Save only if there are no overlapping reservations.
         return _repository.TryCreateBooking(booking);
     }
 
 
-    public bool CancelBooking(int bookingId)
+
+
+
+
+    public bool CancelBooking(int bookingId)             // CANCEL BOOKING
     {
         // Avoid attempting to delete a booking that does not exist.
         Booking? booking = _repository.GetBookingById(bookingId);
