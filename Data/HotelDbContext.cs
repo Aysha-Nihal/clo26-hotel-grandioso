@@ -1,10 +1,10 @@
-﻿// HotelDbContext.cs — Manages database access.
+﻿// HotelDbContext.cs — Manages database access
 
 using Microsoft.EntityFrameworkCore;
 
-public class HotelDbContext : DbContext  // DbContext gives our class database-management functionality.
+public class HotelDbContext : DbContext  // DbContext gives our class database-management functionality
 {
-    // Each DbSet represents an entity collection in the database.
+    // Each DbSet represents an entity collection in the database
     public DbSet<Room> Rooms => Set<Room>();   // Hotel's rooms to EF Core
     public DbSet<RoomType> RoomTypes => Set<RoomType>();
     public DbSet<Guest> Guests => Set<Guest>();
@@ -16,11 +16,11 @@ public class HotelDbContext : DbContext  // DbContext gives our class database-m
     {
         if (!options.IsConfigured)
         {
-            // Read the connection string from the environment to keep configuration outside the source code.
+            // Read the connection string from the environment to keep configuration outside the source code
             string? connectionString =
                 Environment.GetEnvironmentVariable("HOTEL_DB");
 
-            // Fail early to avoid starting the application without a valid database configuration.
+            // Fail early to avoid starting the application without a valid database configuration
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw new InvalidOperationException(
@@ -35,7 +35,7 @@ public class HotelDbContext : DbContext  // DbContext gives our class database-m
     {
         base.OnModelCreating(modelBuilder);
 
-        // Each room number must identify exactly one room in the hotel.
+        // Each room number must identify exactly one room in the hotel
         modelBuilder.Entity<Room>()
             .HasIndex(r => r.RoomNumber)
             .IsUnique();
