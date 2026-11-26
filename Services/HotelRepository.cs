@@ -59,4 +59,98 @@ public class HotelRepository : IHotelRepository
         _context.Bookings.Remove(booking);
         _context.SaveChanges();
     }
+
+    public bool HasOverlappingBooking(
+        int roomId,
+        DateTime checkIn,
+        DateTime checkOut)
+    {
+        // checks whether at least one booking for the same room overlaps the requested dates
+        return _context.Bookings.Any(b =>
+            b.RoomId == roomId &&
+            b.CheckIn < checkOut &&
+            checkIn < b.CheckOut);
+    }
+
+
+    public bool TryCreateBooking(Booking booking)
+    {
+        if (booking.CheckIn >= booking.CheckOut)
+        {
+            throw new ArgumentException(
+                "Check-out must be later than check-in.");
+        }
+
+        // Acquire SQLite's write transaction before checking availability.
+        using var transaction = _context.Database.BeginTransaction(
+            System.Data.IsolationLevel.Serializable);
+
+        bool hasConflict = _context.Bookings.Any(b =>
+            b.RoomId == booking.RoomId &&
+            b.CheckIn < booking.CheckOut &&
+            booking.CheckIn < b.CheckOut);
+
+        if (hasConflict)
+        {
+            return false;
+        }
+
+        _context.Bookings.Add(booking);
+        _context.SaveChanges();
+
+        transaction.Commit();
+        return true;
+    }
+
+
+
+    public Booking? GetBookingById(int bookingId)
+    {
+        return _context.Bookings
+            .Include(b => b.Guest)
+            .Include(b => b.Room)
+            .FirstOrDefault(b => b.Id == bookingId);   // LINQ FirstOrDefault() is to retrieve a booking by its ID.
+    }
+
+
+    public List<Room> GetAvailableRooms(
+        DateTime checkIn,
+        DateTime checkOut)
+    {
+        return _context.Rooms
+            .Include(r => r.RoomType)
+            .Where(r => !_context.Bookings.Any(b =>
+                b.RoomId == r.Id &&
+                b.CheckIn < checkOut &&
+                checkIn < b.CheckOut))
+            .OrderBy(r => r.RoomNumber)
+            .ToList();
+    }
+
+    public List<Treatment> GetAllTreatments()
+    {
+        return _context.Treatments
+            .OrderBy(t => t.Id)
+            .ToList();
+    }
+
+    public Treatment? GetTreatmentById(int treatmentId)
+    {
+        return _context.Treatments
+            .FirstOrDefault(t => t.Id == treatmentId);
+    }
+
+    public void AddSpaBooking(SpaBooking spaBooking)
+    {
+        _context.SpaBookings.Add(spaBooking);
+        _context.SaveChanges();
+    }
+
+    public Guest? GetGuestById(int guestId)
+    {
+        return _context.Guests
+            .FirstOrDefault(g => g.Id == guestId);
+    }
+
+
 }

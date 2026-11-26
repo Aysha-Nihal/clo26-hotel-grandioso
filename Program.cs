@@ -5,44 +5,101 @@
 // TODO: Starta menyn (Boka rum, Avboka, Visa bokningar, Visa lediga rum, Avsluta)
 
 
+//using Microsoft.EntityFrameworkCore;
+
+//Console.WriteLine("=== Hotel Grandioso ===");
+
+//// Open the database connection.
+//using var db = new HotelDbContext();
+
+//// Apply any pending migrations.
+//db.Database.Migrate();
+
+//// Insert the initial hotel data if necessary.
+//DatabaseSeeder.Seed(db);
+
+//// Create the repository for database operations.
+//IHotelRepository repository = new HotelRepository(db);
+
+//// Create the booking service for business logic.
+//BookingService bookingService = new BookingService(repository);
+
+//// Display all hotel rooms using the repository.
+//Console.WriteLine("\n=== Hotel Rooms ===");
+
+//List<Room> rooms = repository.GetAllRooms();
+
+//foreach (Room room in rooms)
+//{
+//    Console.WriteLine(
+//        $"{room.RoomNumber} - {room.RoomType.Name} - " +
+//        $"{room.SizeM2} m² - {room.PricePerNight:N0} kr/night");
+//}
+
+//Console.WriteLine($"\nTotal rooms: {rooms.Count}");
+
+//// TODO: Start the console menu after implementing booking operations.
+
+
+
+
+//Console.WriteLine("\n=== Spa Booking Test ===");
+
+//// Create the spa service.
+//SpaService spaService = new SpaService(repository);
+
+//// Display all treatments.
+//List<Treatment> treatments = spaService.GetTreatments();
+
+//foreach (Treatment treatment in treatments)
+//{
+//    Console.WriteLine(
+//        $"{treatment.Id} - {treatment.Name} - " +
+//        $"{treatment.DurationMinutes} min - {treatment.Price:N0} kr");
+//}
+
+//// Use the existing test guest.
+//Guest? guest = repository.GetGuestByName("Anna Svensson");
+
+//if (guest != null && treatments.Count > 0)
+//{
+//    // Create one spa reservation.
+//    bool booked = spaService.BookTreatment(
+//        guest.Id,
+//        treatments[0].Id,
+//        new DateTime(2026, 12, 22, 14, 0, 0));
+
+//    Console.WriteLine($"Spa booking successful: {booked}");
+//}
+//else
+//{
+//    Console.WriteLine("Test guest or treatments not found.");
+//}
+
+
+
 using Microsoft.EntityFrameworkCore;
 
-Console.WriteLine("=== Hotel Grandioso ===");
+Console.WriteLine("Starting Hotel Grandioso...");
 
-// Open the database 
+// Initialize database and seed data.
 using var db = new HotelDbContext();
 
-Console.WriteLine(
-    $"Database path: {Path.GetFullPath(db.Database.GetDbConnection().DataSource)}");
-
-// Apply migrations
 db.Database.Migrate();
-
-// Insert the initial hotel data if it does not exist.
 DatabaseSeeder.Seed(db);
 
-// Verify the seeded records using LINQ.
-Console.WriteLine($"Room types: {db.RoomTypes.Count()}");
-Console.WriteLine($"Rooms: {db.Rooms.Count()}");
-Console.WriteLine($"Spa treatments: {db.Treatments.Count()}");
+// Initialize repository and services.
+IHotelRepository repository = new HotelRepository(db);
 
-Console.WriteLine("Database initialization completed!");
+BookingService bookingService = new BookingService(repository);
+SpaService spaService = new SpaService(repository);
 
-// Create the repository using the existing database context.
-IHotelRepository repository = new HotelRepository(db);          // Repository initialization
+// Create and start the interactive console menu.
+HotelMenu menu = new HotelMenu(
+    repository,
+    bookingService,
+    spaService);
 
-// Retrieve all rooms through the repository.
-Console.WriteLine("\nAvailable hotel rooms:");
+menu.Run();
 
-// Retrieving rooms using the repository
-List<Room> rooms = repository.GetAllRooms();                    
 
-// Display room details, including room type and nightly price.
-foreach (Room room in rooms)
-{
-    Console.WriteLine(
-        $"{room.RoomNumber} - {room.RoomType.Name} - " +
-        $"{room.SizeM2} m² - {room.PricePerNight} kr/night");
-}
-
-Console.WriteLine($"\nTotal rooms: {rooms.Count}");

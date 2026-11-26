@@ -1,4 +1,6 @@
 ﻿// IHotelRepository.cs :— Defines what database operations are available.
+
+using Microsoft.Data.Sqlite;
 public interface IHotelRepository
 {
     // Retrieve all rooms from the database.
@@ -21,4 +23,40 @@ public interface IHotelRepository
 
     // Cancel an existing room booking.
     void RemoveBooking(Booking booking);
+
+
+    // Check whether a room has an overlapping booking.
+    bool HasOverlappingBooking(
+        int roomId,
+        DateTime checkIn,
+        DateTime checkOut);
+
+
+    // Create a reservation only when the room is not already booked.
+    bool TryCreateBooking(Booking booking);
+
+
+
+    // Find a booking by its database ID.
+    Booking? GetBookingById(int bookingId);
+
+
+
+    // Find rooms without reservations overlapping the requested dates.
+    List<Room> GetAvailableRooms(
+        DateTime checkIn,
+        DateTime checkOut);
+
+
+    // Retrieve all available spa treatments.
+    List<Treatment> GetAllTreatments();
+
+    // Find a treatment by its ID.
+    Treatment? GetTreatmentById(int treatmentId);
+
+    // Save a spa reservation.
+    void AddSpaBooking(SpaBooking spaBooking);
+
+    Guest? GetGuestById(int guestId);
+
 }
