@@ -1,7 +1,4 @@
 
-
-// TODO: Skapa databasen med EF Core 
-
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Starting Hotel Grandioso...");
