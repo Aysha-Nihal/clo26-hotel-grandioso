@@ -6,6 +6,7 @@ Hotel Grandioso is a console-based hotel booking system developed in C# using ob
 
 The application manages hotel rooms, guest reservations, and spa treatments. It demonstrates class relationships, interfaces, the Repository Pattern, LINQ, and database persistence.
 
+
 ## Implemented Features
 
 ### G — Approved
@@ -28,6 +29,7 @@ The application manages hotel rooms, guest reservations, and spa treatments. It 
 - Use LINQ to check room availability and booking conflicts.
 - Coordinate booking creation using a database transaction.
 
+
 ## Application Architecture
 
 | Folder / File | Responsibility |
@@ -48,6 +50,7 @@ The application uses `IHotelRepository` and `HotelRepository` to separate databa
 `BookingService` and `SpaService` depend on the repository interface rather than accessing the database directly.
 
 This design reduces coupling, supports the Single Responsibility Principle, and makes the application easier to test and maintain.
+
 
 ## Installation and Setup
 
@@ -93,6 +96,7 @@ The application provides the following options:
 7. Book a spa treatment.
 0. Exit.
 
+
 ## Booking Availability Using LINQ
 
 To detect overlapping reservations, the repository checks:
@@ -110,10 +114,6 @@ The repository uses `Any()` to determine whether a conflict exists and `Where()`
 The checkout date is exclusive, so a new guest can check in on the same date the previous guest checks out.
 
 The booking conflict check and database insertion are performed inside a transaction to coordinate concurrent operations.
-
-
-
-
 
 
 ## UML Class Diagram
