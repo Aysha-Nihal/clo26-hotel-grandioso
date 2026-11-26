@@ -15,7 +15,6 @@ public class SpaService
         return _repository.GetAllTreatments();
     }
 
-
     public bool BookTreatment(
         int guestId,
         int treatmentId,
