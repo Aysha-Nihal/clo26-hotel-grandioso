@@ -1,5 +1,4 @@
-﻿
-public class HotelMenu
+﻿public class HotelMenu
 {
     private readonly IHotelRepository _repository;
     private readonly BookingService _bookingService;
@@ -76,7 +75,7 @@ public class HotelMenu
         }
     }
 
-    private void ShowAllRooms()  // CASE 1                                              
+    private void ShowAllRooms()                          // CASE 1                                              
     {
         Console.WriteLine("\n=== All Hotel Rooms ===");
 
@@ -91,8 +90,7 @@ public class HotelMenu
     }
 
 
-
-    private void ShowAvailableRooms()   // CASE 2
+    private void ShowAvailableRooms()                   // CASE 2
     {
         Console.WriteLine("\n=== Check Available Rooms ===");
 
@@ -156,9 +154,7 @@ public class HotelMenu
         }
     }
 
-
-
-    private void BookRoom()          // CASE 3
+    private void BookRoom()                                // CASE 3
     {
         Console.WriteLine("\n=== Book a Room ===");
 
@@ -263,10 +259,7 @@ public class HotelMenu
         }
     }
 
-
-
-
-    private void CancelBooking()           // CASE 4
+    private void CancelBooking()                     // CASE 4
     {
         Console.WriteLine("\n=== Cancel a Booking ===");
 
@@ -320,9 +313,6 @@ public class HotelMenu
             : "Booking not found.");
     }
 
-
-
-
     private void ShowAllBookings()               // CASE 5
     {
         Console.WriteLine("\n=== All Hotel Bookings ===");
@@ -360,9 +350,7 @@ public class HotelMenu
     }
 
 
-
-
-    private void ShowSpaTreatments()             // CASE 6
+    private void ShowSpaTreatments()               // CASE 6
     {
         Console.WriteLine("\n=== Spa Treatments ===");
 
@@ -385,8 +373,6 @@ public class HotelMenu
 
         Console.WriteLine($"\nTotal treatments: {treatments.Count}");
     }
-
-
 
     private void BookSpaTreatment()               // CASE 7
     {
@@ -483,6 +469,5 @@ public class HotelMenu
             Console.WriteLine("Spa booking failed.");
         }
     }
-
 
 }
