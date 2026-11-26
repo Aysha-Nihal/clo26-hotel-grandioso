@@ -7,13 +7,13 @@ public class HotelRepository : IHotelRepository
 {
     private readonly HotelDbContext _context;    // Constructor injection
 
-    // Constructor injection allows the repository to use an existing database context.
+    // Constructor injection allows the repository to reuse an existing database context instead of creating its own dependency.
     public HotelRepository(HotelDbContext context)
     {
         _context = context;
     }
 
-    public List<Room> GetAllRooms()
+    public List<Room> GetAllRooms()             // Room types are loaded together with rooms because the console menu needs to display their names.
     {
         return _context.Rooms                   // LINQ and Include()
             .Include(r => r.RoomType)           // Loads the associated room type
@@ -21,7 +21,7 @@ public class HotelRepository : IHotelRepository
             .ToList();                          // Executes the query and returns the results
     }
 
-    public List<Booking> GetAllBookings()
+    public List<Booking> GetAllBookings()       // Guest and room details are needed when displaying bookings.
     {
         return _context.Bookings
             .Include(b => b.Guest)
@@ -49,12 +49,6 @@ public class HotelRepository : IHotelRepository
         _context.SaveChanges();
     }
 
-    //public void AddBooking(Booking booking)
-    //{
-    //    _context.Bookings.Add(booking);
-    //    _context.SaveChanges();
-    //}
-
     public void RemoveBooking(Booking booking)
     {
         _context.Bookings.Remove(booking);
@@ -66,13 +60,12 @@ public class HotelRepository : IHotelRepository
         DateTime checkIn,
         DateTime checkOut)
     {
-        // checks whether at least one booking for the same room overlaps the requested dates
+        // Both date comparisons are required to detect overlapping reservations while allowing check-in on the previous checkout date.
         return _context.Bookings.Any(b =>
             b.RoomId == roomId &&
             b.CheckIn < checkOut &&
             checkIn < b.CheckOut);
     }
-
 
     public bool TryCreateBooking(Booking booking)
     {
@@ -82,7 +75,7 @@ public class HotelRepository : IHotelRepository
                 "Check-out must be later than check-in.");
         }
 
-        // Acquire SQLite's write transaction before checking availability.
+        // The transaction coordinates the availability check and insertion so concurrent booking requests cannot both pass the conflict check.
         using var transaction = _context.Database.BeginTransaction(
             System.Data.IsolationLevel.Serializable);
 
@@ -103,9 +96,8 @@ public class HotelRepository : IHotelRepository
         return true;
     }
 
-
-
     public Booking? GetBookingById(int bookingId)
+    // Related guest and room information is needed when displaying and managing an existing reservation.
     {
         return _context.Bookings
             .Include(b => b.Guest)
@@ -113,10 +105,10 @@ public class HotelRepository : IHotelRepository
             .FirstOrDefault(b => b.Id == bookingId);   // LINQ FirstOrDefault() is to retrieve a booking by its ID.
     }
 
-
     public List<Room> GetAvailableRooms(
         DateTime checkIn,
         DateTime checkOut)
+    // Exclude rooms with an overlapping reservation so that only rooms available for the entire period are returned.
     {
         return _context.Rooms
             .Include(r => r.RoomType)
