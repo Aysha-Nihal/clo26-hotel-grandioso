@@ -1,4 +1,5 @@
 ﻿// IHotelRepository.cs :— Defines what database operations are available.
+//                        Defines the repository interface.
 
 using Microsoft.Data.Sqlite;
 public interface IHotelRepository

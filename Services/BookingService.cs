@@ -1,4 +1,5 @@
-﻿
+﻿// BookingService.cs — Room booking logic.
+
 public class BookingService
 {
     private readonly IHotelRepository _repository;          // Constructor injection

@@ -1,4 +1,5 @@
 ﻿// HotelRepository.cs — Implements those operations using EF Core and LINQ.
+//                      Implements database operations using EF Core.
 
 using Microsoft.EntityFrameworkCore;
 

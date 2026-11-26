@@ -1,4 +1,6 @@
-﻿public class SpaService
+﻿// SpaService.cs — Spa booking logic.
+
+public class SpaService
 {
     private readonly IHotelRepository _repository;
 
@@ -12,33 +14,6 @@
     {
         return _repository.GetAllTreatments();
     }
-
-    //// Create a spa booking for an existing guest.
-    //public bool BookTreatment(
-    //    int guestId,
-    //    int treatmentId,
-    //    DateTime date)
-    //{
-    //    Treatment? treatment =
-    //        _repository.GetTreatmentById(treatmentId);
-
-    //    if (treatment == null)
-    //    {
-    //        return false;
-    //    }
-
-    //    SpaBooking booking = new SpaBooking
-    //    {
-    //        GuestId = guestId,
-    //        TreatmentId = treatmentId,
-    //        Date = date
-    //    };
-
-    //    _repository.AddSpaBooking(booking);
-
-    //    return true;
-    //}
-
 
 
     public bool BookTreatment(

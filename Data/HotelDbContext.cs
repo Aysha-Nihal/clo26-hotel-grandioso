@@ -1,4 +1,5 @@
-﻿
+﻿// HotelDbContext.cs — Manages database access.
+
 using Microsoft.EntityFrameworkCore;
 
 public class HotelDbContext : DbContext  // DbContext gives our class database-management functionality.
