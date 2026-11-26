@@ -2,7 +2,7 @@
 
 public class BookingService
 {
-    private readonly IHotelRepository _repository;          // Constructor injection
+    private readonly IHotelRepository _repository;                 // Constructor injection
 
     // Using the interface keeps business logic independent of EF Core.
     public BookingService(IHotelRepository repository)
@@ -13,7 +13,7 @@ public class BookingService
     // A booking requires at least one night.
     public bool AreDatesValid(DateTime checkIn, DateTime checkOut)
     {
-        return checkIn.Date < checkOut.Date;                 // Date validation
+        return checkIn.Date < checkOut.Date;                       // Date validation
     }
 
     // Calculate the price based on the number of nights.
@@ -28,13 +28,12 @@ public class BookingService
                 "Check-out must be later than check-in.");
         }
 
-        int nights = (checkOut.Date - checkIn.Date).Days;    // Price calculation
+        int nights = (checkOut.Date - checkIn.Date).Days;         // Price calculation
 
         return nights * room.PricePerNight;
     }
 
-
-    public bool IsRoomAvailable(
+    public bool IsRoomAvailable(                                  // CHECK ROOM AVAILABILITY
         int roomId,
         DateTime checkIn,
         DateTime checkOut)
@@ -44,16 +43,14 @@ public class BookingService
             return false;
         }
 
-        // A room is available when no existing booking overlaps the requested dates.
+        // A room is available only if no reservation overlaps the requested period.
         return !_repository.HasOverlappingBooking(
             roomId,
             checkIn.Date,
             checkOut.Date);
     }
 
-
-
-    public bool CreateBooking(              // CREATE BOOKING
+    public bool CreateBooking(                                  // CREATE BOOKING
         int roomNumber,
         int guestId,
         DateTime checkIn,
@@ -66,7 +63,7 @@ public class BookingService
                 "Invalid booking dates.");
         }
 
-        // NEW: Verify that the guest exists.
+        // Verify that the guest exists.
         Guest? guest = _repository.GetGuestById(guestId);
 
         if (guest == null)
@@ -75,7 +72,7 @@ public class BookingService
                 "The requested guest does not exist.");
         }
 
-        // Find the requested room.
+        // Only existing rooms can be reserved.
         Room? room = _repository.GetRoomByNumber(roomNumber);
 
         if (room == null)
@@ -97,12 +94,7 @@ public class BookingService
         return _repository.TryCreateBooking(booking);
     }
 
-
-
-
-
-
-    public bool CancelBooking(int bookingId)             // CANCEL BOOKING
+    public bool CancelBooking(int bookingId)                     // CANCEL BOOKING
     {
         // Avoid attempting to delete a booking that does not exist.
         Booking? booking = _repository.GetBookingById(bookingId);
@@ -116,8 +108,6 @@ public class BookingService
 
         return true;
     }
-
-
 
     public List<Room> GetAvailableRooms(
         DateTime checkIn,
@@ -133,9 +123,6 @@ public class BookingService
             checkIn.Date,
             checkOut.Date);
     }
-
-
-
 
 }
 
