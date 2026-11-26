@@ -100,3 +100,33 @@ classDiagram
 Relationships are implemented using foreign keys and EF Core navigation properties.
 
 
+## GDPR Considerations
+
+Hotel Grandioso follows the GDPR principle of data minimisation by storing only the personal information necessary for the booking system.
+
+### Guest Entity
+
+The `Guest` class contains:
+
+| Field | Purpose |
+|-------|---------|
+| `Id` | Uniquely identifies a guest and connects their room and spa reservations. |
+| `Name` | Identifies the guest associated with a reservation. |
+
+The `Guest` entity also has navigation properties for room and spa bookings. These represent relationships rather than additional personal information fields.
+
+### Data Minimisation
+
+Unnecessary personal information, such as hair colour, height, and religion, is not collected.
+
+Religion is also considered a special category of personal data under GDPR and requires additional protection.
+
+### Design Decisions
+
+- Only essential guest information is stored.
+- Guest data is linked to reservations using foreign keys.
+- Personal information is not unnecessarily duplicated across booking records.
+- EF Core manages the relationships between guests and their reservations.
+
+This design demonstrates data minimisation. A production system would also require appropriate access controls, retention policies, and procedures for handling personal data requests.
+
