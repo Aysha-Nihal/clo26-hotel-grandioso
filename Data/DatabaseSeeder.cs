@@ -1,9 +1,8 @@
-﻿
-public static class DatabaseSeeder
+﻿public static class DatabaseSeeder
 {
     public static void Seed(HotelDbContext db)
     {
-        // Seed room types only if they do not already exist.
+        // Seed room types only if they do not already exist
         if (!db.RoomTypes.Any())
         {
             db.RoomTypes.AddRange(
@@ -20,7 +19,7 @@ public static class DatabaseSeeder
         RoomType luxury = db.RoomTypes.First(r => r.Name == "Luxury");
         RoomType bridal = db.RoomTypes.First(r => r.Name == "Bridal");
 
-        // Prevent duplicate initial rooms when the application restarts.
+        // Prevent duplicate initial rooms when the application restarts
         if (!db.Rooms.Any())
         {
             for (int number = 101; number <= 105; number++)
@@ -80,7 +79,7 @@ public static class DatabaseSeeder
             db.SaveChanges();
         }
 
-        // Add spa treatments only once to avoid duplicates.
+        // Add spa treatments only once to avoid duplicates
         if (!db.Treatments.Any())
         {
             db.Treatments.AddRange(
